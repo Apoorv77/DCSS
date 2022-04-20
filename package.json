@@ -27,6 +27,7 @@
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^4.0.3",
+    "solc": "^0.8.0",
     "truffle": "^5.5.10",
     "web-vitals": "^2.1.4",
     "web3": "^1.7.3"

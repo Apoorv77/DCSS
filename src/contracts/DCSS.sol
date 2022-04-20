@@ -4,11 +4,12 @@ contract DCSS {
   uint public numVideos = 0;
   string public name = "DCSS";
   mapping(uint => Video) private videos;
-  mapping(address => uint256[]) private purchasedVideos;
-  mapping(uint256 => address[]) private purchasedBy;
+  //mapping(address => uint256[]) private purchasedVideos;
+  //mapping(uint256 => address[]) private purchasedBy;
   struct Video {
     uint id;
     string hash;//IPFS Hash
+    //string hashPreview;//IPFS Hash to priview of video
     string description;
     string title;
     string image;
@@ -19,6 +20,7 @@ contract DCSS {
   event VideoUploaded(
     uint id,
     string hash,
+    string hashPreview,
     string description,
     string title,
     string image,
@@ -52,17 +54,17 @@ contract DCSS {
     numVideos = numVideos + 1;
 
     // Add video to the contract
-    videos[numVideos] = Video(numVideos, _videoHash,_description, _title,_imageHash,_fee,payable(_msgSender());
+    videos[numVideos] = Video(numVideos, _videoHash,_description, _title,_imageHash,_fee,payable(_msgSender()));
     // Trigger an event
-    emit VideoUploaded(numVideos, _videoHash,_description, _title,_imageHash,fee,payable(_msgSender()));
+    emit VideoUploaded(numVideos, _videoHash,_description, _title,_imageHash,_fee,payable(_msgSender()));
   }
 
 
   function purchaseVideo(uint _id) public payable{
-      require(_id > 0 && _id <= videoCount, 'Invalid videoId');
-      Video memory _Video = Videos[_id];
+      require(_id > 0 && _id <= numVideos, 'Invalid videoId');
+      Video memory _Video = videos[_id];
       uint _fee = _Video.fee;
-      require(msg.value == fee,'Payment not equal to fee');
+      require(msg.value == _fee,'Payment not equal to fee');
 
        address payable _creator = _Video.creator;
       _creator.transfer(msg.value);

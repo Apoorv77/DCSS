@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Web3 from 'web3';
 import DCSS from '../abis/DCSS.json';
-import Navbar from './Navbar';
+import Navbar from './Navbar/Navbar';
 import Main from './Main';
 import Home from './Home';
 import User from './User';
@@ -107,7 +107,7 @@ class App extends Component {
               }/>
 
 
-              <Route exact path='/upload' element={
+              <Route exact path='/creator/upload' element={
                 <Uploader 
                 account={this.state.account}
                 dcss={this.state.dcss}

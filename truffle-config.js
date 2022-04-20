@@ -24,7 +24,6 @@ module.exports = {
   contracts_build_directory: './src/abis/', // Path to ABIs
   compilers: {
     solc: {
-      version: "pragma",//<-- this is the magic
       optimizer: {
         enabled: true,
         runs: 200
