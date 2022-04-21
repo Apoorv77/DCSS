@@ -24,7 +24,7 @@ const Explore = ({isError,isLoading,videos}) => {
                             <Link key={item.id} to={`/video/${item.id}`}>
                               <VideoCard 
                                 title={item.title}
-                                image={item.imageHash}
+                                image={item.image}
                                 pubDate={item.pubDate}
                                 channel={item.creator}
                               />

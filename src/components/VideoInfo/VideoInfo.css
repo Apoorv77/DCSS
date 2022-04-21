@@ -1,3 +1,7 @@
+.videoinfo {
+    margin-left: -6%;
+    margin-top: -3%;
+}
 .videoinfo__stats, .videoinfo__channel {
     display: flex;
     align-items: center;
@@ -6,7 +10,7 @@
 
 .videoinfo__headline > h1 {
     font-weight: 400;
-    font-size: large;
+    font-size: 1.7rem;
 }
 
 .videoinfo__stats > p {
@@ -16,6 +20,11 @@
 
 .videoinfo__stats > * {
     margin-top: 2px;
+}
+.tip{
+    position:'absolute';
+    right :32%;
+    width:25%;
 }
 
 
@@ -41,3 +50,12 @@ hr {
     font-size: medium;
     margin: 2px;
 }
+
+.btn{
+    display: flex;
+    justify-content: center;
+    width: 75%;
+    text-align: center;
+    margin-top: -2%;
+    margin-left: 12.5%;
+  }

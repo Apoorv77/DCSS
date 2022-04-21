@@ -128,6 +128,12 @@ class App extends Component {
           <Route exact path='/' element={
                 <div className="app__mainpage">
                   <SideBar />
+                  <Home />
+                 </div>
+          }/>
+          <Route exact path='/explore' element={
+                <div className="app__mainpage">
+                  <SideBar />
                   <Explore isError = {this.state.error} isLoading = {this.state.loading} videos = {this.state.videos}   />
                  </div>
           }/>

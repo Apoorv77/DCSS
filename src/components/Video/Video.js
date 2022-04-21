@@ -15,7 +15,14 @@ const Video = ({hash}) =>{
             //   ></video>
             // </div>
             <div paddingLeft ='-20 px'>
-              <ReactPlayer controls url = {`https://ipfs.infura.io/ipfs/${hash}`}
+              <ReactPlayer 
+                // Disable download button
+              config={{ file: { attributes: { controlsList: 'nodownload' } } }}
+
+              // Disable right click
+              onContextMenu={e => e.preventDefault()}
+
+              controls url = {`https://ipfs.infura.io/ipfs/${hash}`}
               width='1080x'
               height='720px'
               />

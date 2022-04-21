@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import "./form.css";
-import "./util.css";
+import "./forms.css";
 
 
 //Declare IPFS
@@ -8,124 +7,140 @@ const ipfsClient = require('ipfs-http-client')
 const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
 
 class Form extends Component {
-    captureFile = event => {
+    captureVideo = event => {
         event.preventDefault()
         const file = event.target.files[0]
         const reader = new window.FileReader()
         reader.readAsArrayBuffer(file)
     
         reader.onloadend = () => {
-            this.setState({ buffer: Buffer(reader.result)},()=>{
-                console.log('buffer', this.state.buffer)
+            this.setState({ vidBuf: Buffer(reader.result)},()=>{
+                console.log('buffer', this.state.vidBuf)
             })
         }
       }
+      capturePic = event => {
+        event.preventDefault()
+        const file = event.target.files[0]
+        const reader = new window.FileReader()
+        reader.readAsArrayBuffer(file)
     
-    uploadVideo = title => {
+        reader.onloadend = () => {
+            this.setState({imgBuf: Buffer(reader.result)},()=>{
+                console.log('buffer', this.state.imgBuf)
+            })
+        }
+      }
+      
+    
+    uploadVideo = (title,description,fee) => {
         console.log("Submitting file to IPFS...")
         //adding file to the IPFS
-        ipfs.add(this.state.buffer, (error, result) => {
-          console.log('IPFS result', result)
+        ipfs.add(this.state.vidBuf, (error, vidResult) => {
           if(error) {
-            console.error(error)
-            return
-          }
-          console.log(this.props.account+' '+title+' '+result[0].hash);
-          this.setState({ loading: true })
-          this.props.dcss.methods.uploadVideo(result[0].hash, title,'first','rtsrs',5000000000000000  ).send({ from: this.props.account }).on('transactionHash', (hash) => {
-            this.setState({ loading: false })
-            console.log('on the blockchain!' + hash)
-          })
+            console.error(error);
+            this.setState({err:error});
+            return;
+            }  
+          console.log('IPFS result', vidResult)
+
+            ipfs.add(this.state.imgBuf,(err,imgResult)=>{
+              if(err) {
+                console.error(err);
+                this.setState({err:err});
+                return;
+                }
+                console.log(imgResult);
+                this.setState({ loading: true });
+                this.props.dcss.methods.uploadVideo(vidResult[0].hash, title,description,imgResult[0].hash,fee)
+                .send({ from: this.props.account }).on('transactionHash', (hash) => {
+                  this.setState({ loading: false })
+                  console.log('on the blockchain! ' + hash);
+                })
+            })
         })
       }
 
       constructor(props) {
         super(props)
         this.state = {
-          buffer: null,
-          loading:true
+          vidBuf: null,
+          imgBuf:null,
+          loading:true,
+          err:null
         }
-        this.captureFile = this.captureFile.bind(this)
+        this.capturePic = this.capturePic.bind(this)
+        this.captureVideo = this.captureVideo.bind(this)
         this.uploadVideo = this.uploadVideo.bind(this)
       }
     render(){
   return (
-     <div className="container-contact100" style={{paddingTop:'4%'}}>
-        <div className="wrap-contact100">
-            <form className="contact100-form validate-form"
-            onSubmit={(event) => {
-                event.preventDefault();
-                const title = this.videoTitle.value;
-                this.uploadVideo(title);
-              }}>
-                <span className="contact100-form-title">
-                {this.props.account}, upload a new video !
-                </span>
-
-            <div className="wrap-input100 validate-input" >
-                <span className="label-input100">Add Video</span>
-                <input className="input100" 
-               type="file"
-               accept=".mp4, .mov, .mkv .ogg .wmv"
-               onChange={this.captureFile}
-               style={{ width: "250px" }}
-                 />
-                <span className="focus-input100"></span>
+<form class="form" 
+ onSubmit={(event) => {
+                  event.preventDefault();
+                  const title = this.videoTitle.value;
+                  const description = this.videoDesc.value;
+                  const fee = this.fee.value;
+                  this.uploadVideo(title,description,fee);
+                }}>
+            <div class="form-control">
+                <label for="video">Video</label>
+                <input 
+                   type="file"
+                    accept=".mp4, .mov, .mkv .ogg .wmv"
+                    onChange={this.captureVideo}
+                    
+                    />
             </div>
-
-            <div className="wrap-input100 validate-input">
-                <span className="label-input100">Add Thumbnail</span>
-                <input className="input100" 
-                 type="file"
-                 accept = "image/*"
-                 onChange={this.capturePic}
-                 style={{width:"250px"}}
-                />
-                <span className="focus-input100"></span>
+            <div class="form-control">
+                <label for="image">Thumbnail</label>
+                <input 
+                     type="file"
+                     accept = "image/*"
+                     onChange={this.capturePic}
+                  />   
             </div>
-
-            <div className="wrap-input100 validate-input">
-                <span className="label-input100">Title</span>
-                <input className="input100" 
-                  id="videoTitle"
-                  type="text"
-                  ref={(input) => {
-                    this.videoTitle = input;
-                  }}
-                  placeholder="enter title here"
-                  required
-                />
-                <span className="focus-input100"></span>
+            <div class="form-control">
+                <label for="title">Title</label>
+                <input 
+                   id="videoTitle"
+                   type="text"
+                   ref={(input) => {
+                      this.videoTitle = input;
+                      }}
+                    placeholder="title..."
+                    required
+                    />
             </div>
+            <div class="form-control">
+                <label for="description">Description</label>
+                <textarea 
+                    id = "videoDesc"
+                    rows = "4"
+                    cols="50"
+                    ref = {(input)=>{
+                        this.videoDesc = input;
+                        }}
+                    required></textarea>
+            </div>
+            <div class="form-control">
+                <label for="title">Fee</label>
+                <input 
+                   id="fee"
+                   type="number"
+                   step="any"
+                   min="0"
 
+                   ref={(input) => {
+                      this.fee = input;
+                      }}
+                    placeholder="(in gwei)"
+                    required
+                    />
+            </div>
+            <button className="btn" type="submit">Upload</button>
             
-            <div className="wrap-input100 validate-input">
-                <span className="label-input100">Description</span>
-                <textarea className="input100" 
-                   id = "videoDesc"
-                   rows = "4"
-                   cols="50"
-                   ref = {(input)=>{
-                       this.videoDesc = input;
-                   }}
-                   required
-                />
-                <span className="focus-input100"></span>
-            </div>
-            <div className="container-contact100-form-btn">
-					<div className="wrap-contact100-form-btn">
-						<div className="contact100-form-bgbtn"></div>
-						<button className="contact100-form-btn" type="submit">
-							<span>
-								Submit
-								<i className="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
-							</span>
-						</button>
-					</div>
-				</div>
         </form>
-    </div>
-</div>
   );
 }
 }

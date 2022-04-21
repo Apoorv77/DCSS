@@ -14,7 +14,7 @@ function VideoPlayer(props) {
     const [video,setVideo] = useState(null);
     const [isLoadingUpVideo,setisLoadingUpVideo] = useState(true);
     const [isError, setIsError] = useState(false);
-    console.log(props.dcss);
+    //console.log(props.dcss);
     const {id}=  useParams();
     useEffect(() =>{
         if(props.dcss){
@@ -44,6 +44,9 @@ function VideoPlayer(props) {
                                     description={video.description}
                                     publishedDate={video.pubDate}
                                     channelTitle={video.creator}
+                                    fee={video.fee}
+                                    tipVideo={props.dcss.methods.tipVideo}
+                                    id = {video.id}
                                   /> : null
                     }
                 </div>
