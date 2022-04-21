@@ -1,15 +1,12 @@
-pragma solidity ^0.8.0;
+pragma solidity ^0.5.0;
 
 contract DCSS {
   uint public numVideos = 0;
   string public name = "DCSS";
-  mapping(uint => Video) private videos;
-  //mapping(address => uint256[]) private purchasedVideos;
-  //mapping(uint256 => address[]) private purchasedBy;
+  mapping(uint => Video) public videos;
   struct Video {
     uint id;
     string hash;//IPFS Hash
-    //string hashPreview;//IPFS Hash to priview of video
     string description;
     string title;
     string image;
@@ -20,7 +17,6 @@ contract DCSS {
   event VideoUploaded(
     uint id,
     string hash,
-    string hashPreview,
     string description,
     string title,
     string image,
@@ -28,12 +24,11 @@ contract DCSS {
     address payable creator
   );
 
-  event VideoPurchased(
+  event VideoTipped(
     uint id,
     string hash,
     uint256 fee,
-    address payable creator,
-    address buyer
+    address payable creator
   );
 
 
@@ -48,19 +43,19 @@ contract DCSS {
     //Make sure description exists 
     require(bytes(_description).length > 0,'Empty Description');
     // Make sure uploader address exists
-    require(payable(_msgSender()) != address(0), 'Empty Address');
+    require(msg.sender != address(0), 'Empty Address');
 
     // Increment video id
     numVideos = numVideos + 1;
 
     // Add video to the contract
-    videos[numVideos] = Video(numVideos, _videoHash,_description, _title,_imageHash,_fee,payable(_msgSender()));
+    videos[numVideos] = Video(numVideos, _videoHash,_description, _title,_imageHash,_fee,(msg.sender));
     // Trigger an event
-    emit VideoUploaded(numVideos, _videoHash,_description, _title,_imageHash,_fee,payable(_msgSender()));
+    emit VideoUploaded(numVideos, _videoHash,_description, _title,_imageHash,_fee,(msg.sender));
   }
 
 
-  function purchaseVideo(uint _id) public payable{
+  function tipVideo(uint _id) public payable{
       require(_id > 0 && _id <= numVideos, 'Invalid videoId');
       Video memory _Video = videos[_id];
       uint _fee = _Video.fee;
@@ -68,9 +63,6 @@ contract DCSS {
 
        address payable _creator = _Video.creator;
       _creator.transfer(msg.value);
-
-      purchasedVideos[_msgSender()].push(_id);
-      purchasedBy[_id].push[_msgSender()];
-      emit VideoPurchased(_id, _Video.hash,_fee,_creator,_msgSender());
+      emit VideoTipped(_id,_Video.hash,_fee,_creator);
     }
 }

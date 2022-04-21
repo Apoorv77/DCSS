@@ -12,7 +12,7 @@ class Form extends Component {
         event.preventDefault()
         const file = event.target.files[0]
         const reader = new window.FileReader()
-         reader.readAsArrayBuffer(file)
+        reader.readAsArrayBuffer(file)
     
         reader.onloadend = () => {
             this.setState({ buffer: Buffer(reader.result)},()=>{
@@ -32,7 +32,7 @@ class Form extends Component {
           }
           console.log(this.props.account+' '+title+' '+result[0].hash);
           this.setState({ loading: true })
-          this.props.dcss.methods.uploadVideo(result[0].hash, title).send({ from: this.props.account }).on('transactionHash', (hash) => {
+          this.props.dcss.methods.uploadVideo(result[0].hash, title,'first','rtsrs',5000000000000000  ).send({ from: this.props.account }).on('transactionHash', (hash) => {
             this.setState({ loading: false })
             console.log('on the blockchain!' + hash)
           })

@@ -4,6 +4,9 @@
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.0",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
@@ -25,6 +28,7 @@
     "react-bootstrap": "^2.2.3",
     "react-custom-share": "^0.4.8",
     "react-dom": "^18.0.0",
+    "react-player": "^2.10.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^4.0.3",
     "solc": "^0.8.0",
@@ -39,6 +43,9 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
+  },
+  "devDependencies": {
+    "react-error-overlay": "^6.0.9"
   },
   "eslintConfig": {
     "extends": [

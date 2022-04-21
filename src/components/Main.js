@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./App.css";
-import VideoList from "./Video/VideoList";
 
 class Main extends Component {
 
@@ -57,7 +56,7 @@ class Main extends Component {
               <button type="submit" className="btn border border-dark btn-primary btn-block btn-sm">Upload</button>
               &nbsp;
             </form> */}
-            <VideoList videos = {this.props.videos} changeVideo={this.props.changeVideo}/>
+            {/* <VideoList videos = {this.props.videos} changeVideo={this.props.changeVideo}/> */}
             </div>
             
         </div>

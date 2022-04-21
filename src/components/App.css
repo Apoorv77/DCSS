@@ -32,10 +32,17 @@ body{
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.footer{
-    background-color: lightgray;
-    margin-top: 500px;
-}
-.footer-links{
-    padding-top: 1px;
-}
+.app__mainpage {
+    display: flex;
+  }
+  
+  a {
+    text-decoration: inherit;
+    color: inherit;
+  }
+  
+  .loading {
+    display: block !important; 
+    width: 50%;
+    margin: auto;
+  }

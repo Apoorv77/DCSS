@@ -1,12 +1,12 @@
 const HDWalletProvider = require("@truffle/hdwallet-provider")
 require('dotenv').config(); // Load .env file
-
+//recipe start afford script remove flock despair liquid cool gravity fringe ris
 module.exports = {
   networks: {
    // For Ganache, your personal blockchain
    development: {
       host: "127.0.0.1",     // Localhost (default: none)
-      port: 8545,            // Standard Ethereum port 
+      port: 7545,            // Standard Ethereum port 
       network_id: "*",       // Any network (default: none)
     },
       matic: {
@@ -15,9 +15,7 @@ module.exports = {
       network_id: 80001,
       confirmations: 2,
       timeoutBlocks: 200,
-      skipDryRun: true,
-      gas: 60000000,
-      gasPrice: 100000000000,
+      skipDryRun: true
     },
   },
   contracts_directory: './src/contracts/', // path to Smart Contracts

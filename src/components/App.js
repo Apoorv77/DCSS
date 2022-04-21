@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import Web3 from 'web3';
 import DCSS from '../abis/DCSS.json';
+
 import Navbar from './Navbar/Navbar';
 import Main from './Main';
 import Home from './Home';
 import User from './User';
 import Creator from './Creator';
+
 import './App.css';
 import Uploader from './Uploader/Uploader';
 
-
+import SideBar from './SideBar/Sidebar';
+import SearchPage from './SearchPage/SearchPage';
+import VideoPlayer from './VideoPlayer/VideoPlayer';
+import Explore from './Explore/Explore';
 class App extends Component {
 
   async componentDidMount() {
@@ -78,6 +84,7 @@ class App extends Component {
       dcss: null,
       videos: [],
       loading: true,
+      error:false,
       currentHash: null,
       currentTitle: null
     }
@@ -86,40 +93,69 @@ class App extends Component {
 
   render() {
     return (
-            <Router>
-            <Navbar account={this.state.account} />
-            <Routes>
-                <Route exact path='/' element={
-                  <Home />
-                } />
-                <Route exact path='/explore' element={
-                <Main 
-                loading={this.state.loading}
-                videos={this.state.videos}
-                changeVideo={this.changeVideo}
-                currentHash={this.state.currentHash}
-                currentTitle={this.state.currentTitle}
-              />
+            // <Router>
+            // <Navbar account={this.state.account} />
+            // <Routes>
+            //     <Route exact path='/' element={
+            //       <Home />
+            //     } />
+            //     <Route exact path='/explore' element={
+            //     <Main 
+            //     loading={this.state.loading}
+            //     videos={this.state.videos}
+            //     changeVideo={this.changeVideo}
+            //     currentHash={this.state.currentHash}
+            //     currentTitle={this.state.currentTitle}
+            //   />
+            //   } />
+            // </Routes>
+            // </Router>
+   <div className="App">
+     <React.StrictMode>
+      <BrowserRouter>
+        <Navbar account={this.state.account} />
+        <Routes>
+          <Route exact path='/video/:id' element={<div className="app__mainpage">
+              <VideoPlayer isLoading={this.state.loading} videos={this.state.videos} dcss={this.state.dcss} />
+            </div>} />
+          
+          <Route exact path='/search/:searchQuery' element={
+            <div className="app__mainpage">
+              <SearchPage />
+            </div>
+          } />
+          
+          <Route exact path='/' element={
+                <div className="app__mainpage">
+                  <SideBar />
+                  <Explore isError = {this.state.error} isLoading = {this.state.loading} videos = {this.state.videos}   />
+                 </div>
+          }/>
+
+
+          <Route exact path='/user' element={
+                <User
+                account={this.state.account}
+                dcss={this.state.dcss}
+                />
               } />
-
-              <Route exact path='/user'element={
-                <User account={this.state.account} videos={this.state.videos}/>
-              }/>
-
-
-              <Route exact path='/creator/upload' element={
+           
+          <Route exact path='/creator/upload' element={
                 <Uploader 
                 account={this.state.account}
                 dcss={this.state.dcss}
                 />
               } />
-
-              <Route exact path = '/creator' element={
+          <Route exact path = '/creator' element={
               <Creator account = {this.state.account} dcss = {this.state.dcss} />
               }/>
+          
+        </Routes>
+      </BrowserRouter>
+      </React.StrictMode>
 
-            </Routes>
-            </Router>
+      
+    </div>
     );
   }
 }
