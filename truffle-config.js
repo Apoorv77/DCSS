@@ -1,6 +1,7 @@
 const HDWalletProvider = require("@truffle/hdwallet-provider")
 require('dotenv').config(); // Load .env file
-//recipe start afford script remove flock despair liquid cool gravity fringe ris
+//man tool shrug ordinary stove million token file resemble cave auto point
+
 module.exports = {
   networks: {
    // For Ganache, your personal blockchain
