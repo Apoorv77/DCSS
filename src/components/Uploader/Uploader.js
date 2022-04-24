@@ -140,7 +140,7 @@ class Form extends Component {
                    ref={(input) => {
                       this.fee = input;
                       }}
-                    placeholder="(in gwei)"
+                    placeholder="(in wei)"
                     required
                     />
             </div>

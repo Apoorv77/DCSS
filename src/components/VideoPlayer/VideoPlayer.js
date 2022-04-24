@@ -47,6 +47,7 @@ function VideoPlayer(props) {
                                     fee={video.fee}
                                     tipVideo={props.dcss.methods.tipVideo}
                                     id = {video.id}
+                                    account={props.account}
                                   /> : null
                     }
                 </div>

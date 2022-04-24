@@ -21,7 +21,7 @@ const Explore = ({isError,isLoading,videos}) => {
                 {
                   videos.map(item => {
                     return (
-                            <Link key={item.id} to={`/video/${item.id}`}>
+                            <Link key={item.id} to={`/video/${item.id}`} style={{textDecoration: 'none'}}>
                               <VideoCard 
                                 title={item.title}
                                 image={item.image}

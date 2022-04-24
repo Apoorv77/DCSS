@@ -116,7 +116,8 @@ class App extends Component {
         <Navbar account={this.state.account} />
         <Routes>
           <Route exact path='/video/:id' element={<div className="app__mainpage">
-              <VideoPlayer isLoading={this.state.loading} videos={this.state.videos} dcss={this.state.dcss} />
+              <VideoPlayer isLoading={this.state.loading} videos={this.state.videos} dcss={this.state.dcss} 
+              account={this.state.account}/>
             </div>} />
           
           <Route exact path='/search/:searchQuery' element={
@@ -126,10 +127,11 @@ class App extends Component {
           } />
           
           <Route exact path='/' element={
-                <div className="app__mainpage">
-                  <SideBar />
+                // <div className="app__mainpage">
+                //   <SideBar />
                   <Home />
-                 </div>
+                //  </div>
+                 
           }/>
           <Route exact path='/explore' element={
                 <div className="app__mainpage">

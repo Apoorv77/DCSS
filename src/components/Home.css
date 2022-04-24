@@ -1,0 +1,57 @@
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+
+body, html {
+  line-height: 1.8;
+  min-height: 100%;
+  width: 100%;
+}
+
+/* Full height image header */
+.w3-bar .w3-button {
+  padding: 16px;
+}
+
+.home{
+        flex: 1;
+        background-color: #f9f9f9;
+        padding: 40px 20px;
+        padding-bottom: 0;
+        color:white;
+        background-repeat:no-repeat;
+        background-size: contain;
+        height: 1300.9062px;;
+/* 
+  Add the blur effect */
+  /* filter: blur(8px);
+  -webkit-filter: blur(8px); */
+}
+
+.center{
+    margin: auto;
+    text-align: center;
+}
+.brand{
+    font-size:7rem;
+    font-family: 'Dancing Script', cursive;
+}
+.description{
+    font-size:3rem;
+    font-family: 'Bitter', serif;
+}
+.blur{
+ 
+    background-color: rgb(33, 31, 31); /* Fallback color */
+    background-color: rgba(46, 45, 45, 0.4); /* Black w/opacity/see-through */
+     color: white;
+  font-weight: bold;
+  /* border: 3px solid #f1f1f1; */
+  /* position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  padding: 20px; */
+  text-align: center;
+}
+

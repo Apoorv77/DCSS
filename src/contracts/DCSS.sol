@@ -11,6 +11,7 @@ contract DCSS {
     string title;
     string image;
     uint256 fee;
+    uint256 earned;
     address payable creator;
   }
 
@@ -49,7 +50,7 @@ contract DCSS {
     numVideos = numVideos + 1;
 
     // Add video to the contract
-    videos[numVideos] = Video(numVideos, _videoHash,_description, _title,_imageHash,_fee,(msg.sender));
+    videos[numVideos] = Video(numVideos, _videoHash,_description, _title,_imageHash,_fee,0,(msg.sender));
     // Trigger an event
     emit VideoUploaded(numVideos, _videoHash,_description, _title,_imageHash,_fee,(msg.sender));
   }
@@ -63,6 +64,7 @@ contract DCSS {
 
        address payable _creator = _Video.creator;
       _creator.transfer(msg.value);
+      videos[_id].earned = videos[_id].earned + _fee;
       emit VideoTipped(_id,_Video.hash,_fee,_creator);
     }
 }

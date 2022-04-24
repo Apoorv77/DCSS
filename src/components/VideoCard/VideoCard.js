@@ -7,7 +7,7 @@ const VideoCard = ({image, title, channel,pubDate}) => {
           <img className='videocard__image' src={`https://ipfs.infura.io/ipfs/${image}`} alt='' />
           <div className="videocard__info">
             <div className="videocard__text">
-              <h4>{title}</h4>
+              <h4 style={{color:'black'}}>{title}</h4>
               <p>{channel}</p>
               <p>{pubDate}</p>
             </div> 
