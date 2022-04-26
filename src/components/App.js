@@ -6,9 +6,9 @@ import DCSS from '../abis/DCSS.json';
 
 import Navbar from './Navbar/Navbar';
 import Main from './Main';
-import Home from './Home';
-import User from './User';
-import Creator from './Creator';
+import Home from './Home/Home';
+import User from './User/User';
+import Creator from './Creator/Creator';
 
 import './App.css';
 import Uploader from './Uploader/Uploader';
@@ -155,7 +155,7 @@ class App extends Component {
                 />
               } />
           <Route exact path = '/creator' element={
-              <Creator account = {this.state.account} dcss = {this.state.dcss} />
+              <Creator account = {this.state.account} dcss = {this.state.dcss} videos={this.state.videos}/>
               }/>
           
         </Routes>

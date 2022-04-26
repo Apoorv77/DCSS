@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import "./forms.css";
-import { Navigate,useNavigate} from 'react-router-dom'
+import './forms.css';
+import { Navigate,useNavigate} from 'react-router-dom';
 
 //Declare IPFS
 const ipfsClient = require('ipfs-http-client')
@@ -80,7 +80,7 @@ class Form extends Component {
       }
     render(){
   return (
-<form class="form" 
+<form className="form" 
  onSubmit={(event) => {
                   event.preventDefault();
                   const title = this.videoTitle.value;
@@ -89,7 +89,7 @@ class Form extends Component {
                   this.uploadVideo(title,description,fee,this.redirect);
               
                 }}>
-            <div class="form-control">
+            <div className="form-control">
                 <label for="video">Video</label>
                 <input 
                    type="file"
@@ -98,7 +98,7 @@ class Form extends Component {
                     
                     />
             </div>
-            <div class="form-control">
+            <div className="form-control">
                 <label for="image">Thumbnail</label>
                 <input 
                      type="file"
@@ -106,7 +106,7 @@ class Form extends Component {
                      onChange={this.capturePic}
                   />   
             </div>
-            <div class="form-control">
+            <div className="form-control">
                 <label for="title">Title</label>
                 <input 
                    id="videoTitle"
@@ -118,7 +118,7 @@ class Form extends Component {
                     required
                     />
             </div>
-            <div class="form-control">
+            <div className="form-control">
                 <label for="description">Description</label>
                 <textarea 
                     id = "videoDesc"
@@ -129,7 +129,7 @@ class Form extends Component {
                         }}
                     required></textarea>
             </div>
-            <div class="form-control">
+            <div className="form-control">
                 <label for="title">Fee</label>
                 <input 
                    id="fee"
@@ -150,7 +150,7 @@ class Form extends Component {
               <p className='upload'>Uploading ...</p>
             </div>
             
-            :<button className="btn" type="submit">Upload</button>}
+            :<button className="btn" style={{marginTop:'30px'}} type="submit">Upload</button>}
             
             
         </form>

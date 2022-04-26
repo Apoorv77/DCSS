@@ -50,13 +50,22 @@ form {
     100% { transform: rotate(360deg); }
   }
 
-  .btn{
-    display: flex;
-    justify-content: center;
-    width: 75%;
-    text-align: center;
-    margin-top: 4%;
-    margin-left: 12.5%;
+  .btn {
+    display: inline-block;
+    padding: 0.25rem 1rem;
+    text-decoration: none;
+    font: inherit;
+    border: 1px solid red;
+    color: red;
+    background: white;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .btn:hover,
+  .btn:active {
+    background-color: red;
+    color: white;
   }
   .upload{
     margin-top:20%;

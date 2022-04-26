@@ -24,6 +24,7 @@
     "dotenv": "^16.0.0",
     "identicon.js": "^2.3.3",
     "ipfs-http-client": "^33.1.1",
+    "mdbreact": "^5.2.0",
     "react": "^18.0.0",
     "react-bootstrap": "^2.2.3",
     "react-custom-share": "^0.4.8",
@@ -31,7 +32,9 @@
     "react-player": "^2.10.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^4.0.3",
+    "recharts": "^2.1.9",
     "solc": "^0.8.0",
+    "styled-components": "^5.3.5",
     "truffle": "^5.5.10",
     "web-vitals": "^2.1.4",
     "web3": "^1.7.3"

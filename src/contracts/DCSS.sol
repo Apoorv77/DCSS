@@ -4,6 +4,8 @@ contract DCSS {
   uint public numVideos = 0;
   string public name = "DCSS";
   mapping(uint => Video) public videos;
+  mapping (address => uint[]) public videosOfCreator;
+  mapping (address => uint)public numVideosofCreator;
   struct Video {
     uint id;
     string hash;//IPFS Hash
@@ -11,7 +13,7 @@ contract DCSS {
     string title;
     string image;
     uint256 fee;
-    uint256 earned;
+    uint256 timesTipped;
     address payable creator;
   }
 
@@ -51,12 +53,15 @@ contract DCSS {
 
     // Add video to the contract
     videos[numVideos] = Video(numVideos, _videoHash,_description, _title,_imageHash,_fee,0,(msg.sender));
+    videosOfCreator[msg.sender].push(numVideos);
+    numVideosofCreator[msg.sender] = numVideosofCreator[msg.sender] + 1;
     // Trigger an event
     emit VideoUploaded(numVideos, _videoHash,_description, _title,_imageHash,_fee,(msg.sender));
   }
 
 
   function tipVideo(uint _id) public payable{
+
       require(_id > 0 && _id <= numVideos, 'Invalid videoId');
       Video memory _Video = videos[_id];
       uint _fee = _Video.fee;
@@ -64,7 +69,14 @@ contract DCSS {
 
        address payable _creator = _Video.creator;
       _creator.transfer(msg.value);
-      videos[_id].earned = videos[_id].earned + _fee;
+      videos[_id].timesTipped = videos[_id].timesTipped + 1;
       emit VideoTipped(_id,_Video.hash,_fee,_creator);
-    }
+  }
+
+  function getCreatorData(address _address) public view returns(uint [] memory){
+    //Make sure address is valid
+    require(_address != address(0),'Empty Address');
+
+    return videosOfCreator[_address];
+  }
 }

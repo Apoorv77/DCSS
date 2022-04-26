@@ -1,10 +1,5 @@
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 
-body, html {
-  line-height: 1.8;
-  min-height: 100%;
-  width: 100%;
-}
 
 /* Full height image header */
 .w3-bar .w3-button {
@@ -19,7 +14,8 @@ body, html {
         color:white;
         background-repeat:no-repeat;
         background-size: contain;
-        height: 1300.9062px;;
+        height: 1100.9062px;;
+        margin-bottom: -300px;
 /* 
   Add the blur effect */
   /* filter: blur(8px);
@@ -31,10 +27,12 @@ body, html {
     text-align: center;
 }
 .brand{
+  margin-left: -13.5%;
     font-size:7rem;
     font-family: 'Dancing Script', cursive;
 }
 .description{
+  margin-left: -7%;
     font-size:3rem;
     font-family: 'Bitter', serif;
 }
@@ -54,4 +52,5 @@ body, html {
   padding: 20px; */
   text-align: center;
 }
+
 

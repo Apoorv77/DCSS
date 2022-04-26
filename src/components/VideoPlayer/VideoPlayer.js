@@ -22,6 +22,7 @@ function VideoPlayer(props) {
         .then(loadedVideo =>{
             setVideo(loadedVideo);
             setisLoadingUpVideo(false);
+            console.log('finished');
         })
         .catch(err =>{
             console.log(err);
