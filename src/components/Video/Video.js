@@ -23,7 +23,7 @@ const Video = ({hash,id,rewardAdView,isAd,account}) =>{
                 if(isAd){
                   try{
                     console.log('rewarding');
-                    rewardAdView(id).send({from:account});
+                  rewardAdView(id).send({from:account});
                   }catch(err){
                   console.log(err);
                   }

@@ -67,8 +67,8 @@ contract Bank {
         return bal;
     }
 
-    function depositsBalance() public view returns (uint) {
-        return address(this).balance;
-    }
+    // function depositsBalance() public view returns (uint) {
+    //     return address(this).balance;
+    // }
 
 }

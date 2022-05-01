@@ -31,7 +31,7 @@ class Account extends Component{
       if(networkData) {
       const dcss = new web3.eth.Contract(DCSS.abi, networkData.address)
       this.setState({ dcss });
-      const balance = await dcss.methods.balanceAmount().call();
+      const balance = await dcss.methods.balanceAmount().call({from: account});
       this.setState({balance:balance});
       this.setState({isLoadingUpContent:false});
       console.log('finished');
