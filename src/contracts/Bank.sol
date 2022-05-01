@@ -28,7 +28,8 @@ contract Bank {
     function deposit() public payable returns (uint) {
         if(accounts[msg.sender].isValid == false){
             //Setting up the account
-            createAccount(msg.sender);
+            accounts[msg.sender].isValid=true;
+            accounts[msg.sender].balance=0;
             clientCount++;
         }
         accounts[msg.sender].balance += msg.value;
@@ -52,7 +53,8 @@ contract Bank {
         require(accounts[_sender].isValid==true,"Sender account doesn't exist");
         require(accounts[_sender].balance >= amount,"Insufficient balance !");
         if(accounts[_receiver].isValid == false){
-            createAccount(_receiver);
+            accounts[_receiver].isValid=true;
+            accounts[_receiver].balance=0;
         }
         
         accounts[_sender].balance -= amount;
@@ -60,7 +62,13 @@ contract Bank {
         emit PaymentMade(_sender,_receiver,amount);
   }
   
-    function balance(address _client) public view returns (uint) {
-        return accounts[_client].balance;
+     function balanceAmount() public view returns (uint) {
+        uint bal = accounts[msg.sender].balance;
+        return bal;
     }
+
+    function depositsBalance() public view returns (uint) {
+        return address(this).balance;
+    }
+
 }

@@ -115,7 +115,8 @@ contract DCSS is Bank {
 
     //Advertiser needs to have an account in out bank to deposit the amount which will then be distributed among creators and viewers
     if(Bank.accounts[msg.sender].isValid == false){
-      Bank.createAccount(msg.sender);
+      Bank.accounts[msg.sender].isValid=true;
+      Bank.accounts[msg.sender].balance=0;
     }
 
     numAds = numAds + 1;
