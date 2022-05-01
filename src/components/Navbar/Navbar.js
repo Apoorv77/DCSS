@@ -39,7 +39,13 @@ class Navbar extends Component{
         </ul>
         <ul className="main-header__item-list">
                 <li className="main-header__item">
-                    <a className={path==='/login'?'active':''} href="/login">Login</a>
+                <a className={path ==='/ads'?'active':''} href="/ads">Ads</a>
+                </li>
+                <li className="main-header__item">
+                <a className={path ==='/uploadAd'?'active':''} href="/uploadAd">Upload Ad</a>
+                </li>
+                <li className="main-header__item">
+                    <a className={path ==='/account'?'active':''} href="/account">Account</a>
                 </li>
                 <li className="main-header__item">
                 <a className={path ==='/account'?'active':''} href="/account">{this.props.account}</a>
@@ -63,7 +69,7 @@ class Navbar extends Component{
     </nav>
 </header>
 
-<nav class="mobile-nav">
+{/* <nav class="mobile-nav">
     <ul class="mobile-nav__item-list">
         <li class="mobile-nav__item">
             <a class="<%= path === '/' ? 'active' : '' %>" href="/">Shop</a>
@@ -92,7 +98,7 @@ class Navbar extends Component{
                 <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
             </li>
     </ul>
-</nav>
+</nav> */}
       </div>
     );
   }

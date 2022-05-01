@@ -18,6 +18,18 @@ function VideoPlayer(props) {
     const {id}=  useParams();
     useEffect(() =>{
         if(props.dcss){
+        if(props.isAd){
+        props.dcss.methods.ads(id).call()
+        .then(loadedVideo =>{
+            setVideo(loadedVideo);
+            setisLoadingUpVideo(false);
+            console.log('finished');
+        })
+        .catch(err =>{
+            console.log(err);
+            setIsError(true);
+        })
+       }else{
         props.dcss.methods.videos(id).call()
         .then(loadedVideo =>{
             setVideo(loadedVideo);
@@ -28,8 +40,9 @@ function VideoPlayer(props) {
             console.log(err);
             setIsError(true);
         })
+       }
     }
-    });
+    },[]);
 
         return (
             <div className='videoplayer'>
@@ -37,7 +50,7 @@ function VideoPlayer(props) {
                 <div className='videoplayer__video'>
                     {isLoadingUpVideo ? 
                     <CircularProgress className='loading' color='secondary'/> : 
-                    <Video hash={video.hash} /> }
+                    <Video hash={video.hash} id={video.id} rewardAdView={props.dcss.methods.rewardAdView} isAd={props.isAd} account={props.account} /> }
                 </div>
                 <div className='videoplayer__videoinfo'>
                     {!isLoadingUpVideo ? <VideoInfo
@@ -49,12 +62,14 @@ function VideoPlayer(props) {
                                     tipVideo={props.dcss.methods.tipVideo}
                                     id = {video.id}
                                     account={props.account}
+                                    isAd={props.isAd}
+                                    reward={video.reward}
                                   /> : null
                     }
                 </div>
             </div>
             <div className='videoplayer__suggested'>
-                <Explore isLoading={props.isLoading} isError={isError} videos={props.videos}/>
+                <Explore isLoading={props.isLoading} isError={isError} videos={props.videos} isAd={props.isAd}/>
             </div>
         </div>
         );

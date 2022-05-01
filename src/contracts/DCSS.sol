@@ -1,11 +1,29 @@
 pragma solidity ^0.5.0;
 
-contract DCSS {
+import "./Bank.sol";
+
+
+contract DCSS is Bank {
   uint public numVideos = 0;
+  uint public numAds = 0;
   string public name = "DCSS";
+  
+  mapping (uint => mapping (address => bool)) private watchedAd;
+  mapping(uint => Ad) public ads;
+  
   mapping(uint => Video) public videos;
   mapping (address => uint[]) public videosOfCreator;
   mapping (address => uint)public numVideosofCreator;
+
+
+  struct Ad{
+    uint id;
+    string hash;
+    string title;
+    string image;
+    uint reward;
+    address payable advertiser;
+  }
   struct Video {
     uint id;
     string hash;//IPFS Hash
@@ -34,6 +52,13 @@ contract DCSS {
     address payable creator
   );
 
+    event AdUploaded(
+    uint id,
+    string hash,
+    string title,
+    string image,
+    address payable advertiser
+  );
 
   constructor() public {
   }
@@ -78,5 +103,38 @@ contract DCSS {
     require(_address != address(0),'Empty Address');
 
     return videosOfCreator[_address];
+  }
+
+  function uploadAdvertisement(string memory _videoHash, string memory _title,string memory _imageHash) public payable{
+  // Make sure the video hash exists
+    require(bytes(_videoHash).length > 0,'Empty videoHash');
+    // Make sure video title exists
+    require(bytes(_title).length > 0,'Empty Title');
+    // Make sure uploader address exists
+    require(msg.sender != address(0), 'Empty Address');
+
+    //Advertiser needs to have an account in out bank to deposit the amount which will then be distributed among creators and viewers
+    if(Bank.accounts[msg.sender].isValid == false){
+      Bank.createAccount(msg.sender);
+    }
+
+    numAds = numAds + 1;
+
+    // Add ad to the contract
+    ads[numAds] = Ad(numAds,_videoHash, _title,_imageHash,1000000000000000,(msg.sender));
+    // deposit().send({from:msg.sender,value:dep_amt});
+    // Trigger an event
+    emit AdUploaded(numAds, _videoHash, _title,_imageHash,(msg.sender));
+  }
+
+  function rewardAdView(uint _id) public {
+    require(_id > 0 && _id <= numAds, 'Invalid adId');
+    Ad memory _ad = ads[_id];
+    //You get the fee to pay the ad only once
+    if(watchedAd[_id][msg.sender]==false){
+      watchedAd[_id][msg.sender]=true;
+      Bank.pay(_ad.advertiser,msg.sender,1000000000000000);
+    }
+
   }
 }

@@ -1,7 +1,8 @@
 import React from 'react';
+import { propTypes } from 'react-bootstrap/esm/Image';
 import ReactPlayer from 'react-player';
 
-const Video = ({hash}) =>{
+const Video = ({hash,id,rewardAdView,isAd,account}) =>{
     return (
             // <div
             //   className="embed-responsive embed-responsive-21by9"
@@ -18,7 +19,16 @@ const Video = ({hash}) =>{
               <ReactPlayer 
                 // Disable download button
               config={{ file: { attributes: { controlsList: 'nodownload' } } }}
-
+              onEnded={()=>{
+                if(isAd){
+                  try{
+                    console.log('rewarding');
+                    rewardAdView(id).send({from:account});
+                  }catch(err){
+                  console.log(err);
+                  }
+                }
+              }}
               // Disable right click
               onContextMenu={e => e.preventDefault()}
 

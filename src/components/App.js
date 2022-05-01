@@ -4,12 +4,13 @@ import { BrowserRouter } from 'react-router-dom';
 import Web3 from 'web3';
 import DCSS from '../abis/DCSS.json';
 
+import AdUploader from "./AdUploader/AdUploader";
 import Navbar from './Navbar/Navbar';
 import Main from './Main';
 import Home from './Home/Home';
 import User from './User/User';
 import Creator from './Creator/Creator';
-
+import Account from "./Account/Account";
 import './App.css';
 import Uploader from './Uploader/Uploader';
 
@@ -57,6 +58,16 @@ class App extends Component {
           videos: [...this.state.videos, video]
         })
       }
+
+      const numAds = await dcss.methods.numAds().call()
+      this.setState({numAds});
+      for(var i=numAds;i>=1 ;i--){
+        const ad = await dcss.methods.ads(i).call()
+        this.setState({
+          ads:[...this.state.ads,ad]
+        })
+      }
+
       //Set latest video with title to view as default 
       const latest = await dcss.methods.videos(numVideos).call()
       this.setState({
@@ -83,6 +94,9 @@ class App extends Component {
       account: '',
       dcss: null,
       videos: [],
+      ads:[],
+      numAds:0,
+      numVideos:0,
       loading: true,
       error:false,
       currentHash: null,
@@ -117,6 +131,12 @@ class App extends Component {
         <Routes>
           <Route exact path='/video/:id' element={<div className="app__mainpage">
               <VideoPlayer isLoading={this.state.loading} videos={this.state.videos} dcss={this.state.dcss} 
+              isAd={false}
+              account={this.state.account}/>
+            </div>} />
+            <Route exact path='/ad/:id' element={<div className="app__mainpage">
+              <VideoPlayer isLoading={this.state.loading} videos={this.state.ads} dcss={this.state.dcss}
+              isAd={true}
               account={this.state.account}/>
             </div>} />
           
@@ -136,15 +156,37 @@ class App extends Component {
           <Route exact path='/explore' element={
                 <div className="app__mainpage">
                   <SideBar />
-                  <Explore isError = {this.state.error} isLoading = {this.state.loading} videos = {this.state.videos}   />
+                  <Explore isError = {this.state.error} isLoading = {this.state.loading} videos = {this.state.videos} isAd={false}  />
                  </div>
           }/>
 
-
+    <Route exact path='/ads' element={
+                <div className="app__mainpage">
+                  <Explore 
+                  isError = {this.state.error}
+                   isLoading = {this.state.loading} 
+                   videos = {this.state.ads}
+                   isAd={true}
+                   />
+                 </div>
+          }/>
+          
+          <Route exact path='/uploadAd' element={
+                <AdUploader
+                account={this.state.account}
+                dcss={this.state.dcss}
+                />
+              } />
+          
           <Route exact path='/user' element={
                 <User
                 account={this.state.account}
                 dcss={this.state.dcss}
+                />
+              } />
+          
+          <Route exact path='/account' element={
+                <Account
                 />
               } />
            
