@@ -1,6 +1,12 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+##Report
+https://docs.google.com/document/d/1aKAeoltW0VGnamTUU0WhHgGfby8kVP5vr0CFWkTIU0E/
+##Setting Up
+1.Install Dependencies: ganache,truffle,ethereum,clone this repo(run: git clone https://github.com/Apoorv77/DCSS.git ).
+2.Install the required packages using :npm install.
+3.Run ganache. Check if the gananche client is listening on 127.0.0.1:7545. and migrate the contracts to the local blockchain.On a new terminal Run: truffle migrate --network development --reset
+4.Deploy the front end of the project. Run: npm start
+5.Add the localnet account to Metamask by importing the key.
+The project is now setup.
 
 ## Available Scripts
 
